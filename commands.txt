@@ -1,0 +1,9 @@
+go get gorm.io/driver/postgres
+
+go get gorm.io/gorm
+
+go get github.com/rs/zerolog
+
+go get github.com/joho/godotenv
+
+go get github.com/gin-gonic/gin
