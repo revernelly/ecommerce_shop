@@ -7,3 +7,5 @@ go get github.com/rs/zerolog
 go get github.com/joho/godotenv
 
 go get github.com/gin-gonic/gin
+
+ go get github.com/golang-jwt/jwt/v5
