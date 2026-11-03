@@ -1,10 +1,20 @@
 package main
 
 import (
+	"context"
+	"errors"
+	"fmt"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/revernelly/go_shop/internal/config"
 	"github.com/revernelly/go_shop/internal/database"
 	"github.com/revernelly/go_shop/internal/logger"
+	"github.com/revernelly/go_shop/internal/server"
 )
 
 func main() {
@@ -15,7 +25,7 @@ func main() {
 		log.Fatal().Err(err).Msg("failed to load configuration")
 	}
 
-	db, err := database.New(cfg.Database)
+	db, err := database.New(&cfg.Database)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to connect to database")
 	}
@@ -27,5 +37,37 @@ func main() {
 	defer mainDB.Close()
 	gin.SetMode(cfg.Server.GinMode)
 
-	log.Info().Msg("starting server")
+	// Start the server
+	srv := server.New(cfg, db, &log)
+
+	router := srv.SetupRoutes()
+
+	httpServer := &http.Server{
+		Addr:         fmt.Sprintf(":%s", cfg.Server.Port),
+		Handler:      router,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+	}
+
+	go func() {
+		log.Info().Str("port", cfg.Server.Port).Msg("starting http server")
+		if err := httpServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			log.Fatal().Err(err).Msg("failed to start http server")
+		}
+	}()
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+
+	log.Info().Msg("shutting down server")
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+
+	if err := httpServer.Shutdown(ctx); err != nil {
+		log.Error().Err(err).Msg("failed to shutdown http server")
+		return
+	}
+
+	log.Info().Msg("shutting down database")
 }
