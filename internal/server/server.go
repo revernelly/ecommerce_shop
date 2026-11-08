@@ -17,6 +17,7 @@ type Server struct {
 	authService    *services.AuthService
 	productService *services.ProductService
 	userService    *services.UserService
+	uploadService  *services.UploadService
 }
 
 func New(cfg *config.Config,
@@ -25,6 +26,7 @@ func New(cfg *config.Config,
 	authService *services.AuthService,
 	productService *services.ProductService,
 	userService *services.UserService,
+	uploadService *services.UploadService,
 ) *Server {
 	return &Server{
 		config:         cfg,
@@ -33,6 +35,7 @@ func New(cfg *config.Config,
 		authService:    authService,
 		productService: productService,
 		userService:    userService,
+		uploadService:  uploadService,
 	}
 }
 

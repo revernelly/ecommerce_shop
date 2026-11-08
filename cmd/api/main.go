@@ -14,6 +14,7 @@ import (
 	"github.com/revernelly/go_shop/internal/config"
 	"github.com/revernelly/go_shop/internal/database"
 	"github.com/revernelly/go_shop/internal/logger"
+	"github.com/revernelly/go_shop/internal/providers"
 	"github.com/revernelly/go_shop/internal/server"
 	"github.com/revernelly/go_shop/internal/services"
 )
@@ -41,9 +42,10 @@ func main() {
 	authService := services.NewAuthService(db, cfg)
 	productService := services.NewProductService(db)
 	userService := services.NewUserService(db)
+	uploadService := services.NewUploadService(providers.NewLocalUploadProvider(cfg.Upload.Path))
 
 	// Start the server
-	srv := server.New(cfg, db, &log, authService, productService, userService)
+	srv := server.New(cfg, db, &log, authService, productService, userService, uploadService)
 
 	router := srv.SetupRoutes()
 
