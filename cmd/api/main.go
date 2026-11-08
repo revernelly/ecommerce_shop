@@ -15,6 +15,7 @@ import (
 	"github.com/revernelly/go_shop/internal/database"
 	"github.com/revernelly/go_shop/internal/logger"
 	"github.com/revernelly/go_shop/internal/server"
+	"github.com/revernelly/go_shop/internal/services"
 )
 
 func main() {
@@ -37,8 +38,12 @@ func main() {
 	defer mainDB.Close()
 	gin.SetMode(cfg.Server.GinMode)
 
+	authService := services.NewAuthService(db, cfg)
+	productService := services.NewProductService(db)
+	userService := services.NewUserService(db)
+
 	// Start the server
-	srv := server.New(cfg, db, &log)
+	srv := server.New(cfg, db, &log, authService, productService, userService)
 
 	router := srv.SetupRoutes()
 

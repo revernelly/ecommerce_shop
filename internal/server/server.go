@@ -5,21 +5,34 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/revernelly/go_shop/internal/config"
+	"github.com/revernelly/go_shop/internal/services"
 	"github.com/rs/zerolog"
 	"gorm.io/gorm"
 )
 
 type Server struct {
-	config *config.Config
-	db     *gorm.DB
-	logger *zerolog.Logger
+	config         *config.Config
+	db             *gorm.DB
+	logger         *zerolog.Logger
+	authService    *services.AuthService
+	productService *services.ProductService
+	userService    *services.UserService
 }
 
-func New(cfg *config.Config, db *gorm.DB, logger *zerolog.Logger) *Server {
+func New(cfg *config.Config,
+	db *gorm.DB,
+	logger *zerolog.Logger,
+	authService *services.AuthService,
+	productService *services.ProductService,
+	userService *services.UserService,
+) *Server {
 	return &Server{
-		config: cfg,
-		db:     db,
-		logger: logger,
+		config:         cfg,
+		db:             db,
+		logger:         logger,
+		authService:    authService,
+		productService: productService,
+		userService:    userService,
 	}
 }
 
