@@ -13,6 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/revernelly/go_shop/internal/config"
 	"github.com/revernelly/go_shop/internal/database"
+	"github.com/revernelly/go_shop/internal/interfaces"
 	"github.com/revernelly/go_shop/internal/logger"
 	"github.com/revernelly/go_shop/internal/providers"
 	"github.com/revernelly/go_shop/internal/server"
@@ -42,7 +43,15 @@ func main() {
 	authService := services.NewAuthService(db, cfg)
 	productService := services.NewProductService(db)
 	userService := services.NewUserService(db)
-	uploadService := services.NewUploadService(providers.NewLocalUploadProvider(cfg.Upload.Path))
+
+	var uploadProvider interfaces.UploadProvider
+	if cfg.Upload.UploadProvider == "s3" {
+		uploadProvider = providers.NewS3Provider(cfg)
+	} else {
+		uploadProvider = providers.NewLocalUploadProvider(cfg.Upload.Path)
+	}
+
+	uploadService := services.NewUploadService(uploadProvider)
 
 	// Start the server
 	srv := server.New(cfg, db, &log, authService, productService, userService, uploadService)

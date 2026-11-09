@@ -49,7 +49,7 @@ services:
       - "4566:4566" # LocalStack Gateway\
     volumes:
       - localstack_data:/var/lib/localstack
-      # - ./init/aws/init-localstack.sh:/etc/localstack/init/ready.d/init.sh
+      - ./init/aws/init-localstack.sh:/etc/localstack/init/ready.d/init.sh
 
   # app:
   #   build:
