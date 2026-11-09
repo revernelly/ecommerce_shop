@@ -5,7 +5,8 @@ import (
 	"mime/multipart"
 	"path/filepath"
 	"strings"
-	"uuid"
+
+	"github.com/google/uuid"
 
 	"github.com/revernelly/go_shop/internal/interfaces"
 )

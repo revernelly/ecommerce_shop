@@ -11,7 +11,6 @@ require (
 	github.com/gin-gonic/gin v1.12.0
 	github.com/golang-jwt/jwt/v5 v5.3.1
 	github.com/joho/godotenv v1.5.1
-	github.com/knadh/koanf/providers/appconfig v0.1.0
 	github.com/rs/zerolog v1.35.1
 	golang.org/x/crypto v0.48.0
 	gorm.io/driver/postgres v1.6.3
@@ -24,7 +23,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.5.11 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.8.11 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/v4a v1.5.11 // indirect
-	github.com/aws/aws-sdk-go-v2/service/appconfig v1.16.1 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.24 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/checksum v1.11.12 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.14.11 // indirect
@@ -45,6 +43,7 @@ require (
 	github.com/go-playground/validator/v10 v10.30.1 // indirect
 	github.com/goccy/go-json v0.10.5 // indirect
 	github.com/goccy/go-yaml v1.19.2 // indirect
+	github.com/google/uuid v1.6.0
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/pgx/v5 v5.10.0 // indirect
