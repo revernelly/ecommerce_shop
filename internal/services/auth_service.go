@@ -63,11 +63,11 @@ func (s *AuthService) Register(req *dto.RegisterRequest) (*dto.AuthResponse, err
 func (s *AuthService) Login(req *dto.LoginRequest) (*dto.AuthResponse, error) {
 	var user models.User
 	if err := s.db.Where("email = ? AND is_active = ?", req.Email, true).First(&user).Error; err != nil {
-		return nil, errors.New("Invalid crendentials")
+		return nil, errors.New("invalid crendentials")
 	}
 
 	if !utils.CheckPassword(req.Password, user.Password) {
-		return nil, errors.New("Invalid credentials")
+		return nil, errors.New("invalid credentials")
 	}
 	return s.generateAuthResponse(&user)
 }
@@ -75,7 +75,7 @@ func (s *AuthService) Login(req *dto.LoginRequest) (*dto.AuthResponse, error) {
 func (s *AuthService) RefreshToken(req *dto.RefreshTokenRequest) (*dto.AuthResponse, error) {
 	claims, err := utils.ValidateToken(req.RefreshToken, s.config.JWT.Secret)
 	if err != nil {
-		return nil, errors.New("Invalid refresh token")
+		return nil, errors.New("invalid refresh token")
 	}
 
 	var refreshToken models.RefreshToken
@@ -85,7 +85,7 @@ func (s *AuthService) RefreshToken(req *dto.RefreshTokenRequest) (*dto.AuthRespo
 
 	var user models.User
 	if err := s.db.First(&user, claims.UserID).Error; err != nil {
-		return nil, errors.New("User not found")
+		return nil, errors.New("user not found")
 	}
 
 	s.db.Delete(&refreshToken)
