@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	_ "github.com/revernelly/go_shop/docs"
 	"github.com/revernelly/go_shop/internal/config"
 	"github.com/revernelly/go_shop/internal/database"
 	"github.com/revernelly/go_shop/internal/interfaces"
@@ -19,6 +20,27 @@ import (
 	"github.com/revernelly/go_shop/internal/server"
 	"github.com/revernelly/go_shop/internal/services"
 )
+
+// @title E-Commerce API
+// @version 1.0
+// @description A modern e-commerce API built with Go, Gin, and GORM
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name   Anyanwu Carl
+// @contact.url    http://linkedin.com/in/carl-anyanwu
+// @contact.email  anyanwuocee@gmail.com
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host localhost:8080
+// @BasePath /api/v1
+// @schemas http https
+
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+// @description Type "Bearer" followed by a space and JWT token.
 
 func main() {
 
@@ -56,7 +78,17 @@ func main() {
 	uploadService := services.NewUploadService(uploadProvider)
 
 	// Start the server
-	srv := server.New(cfg, db, &log, authService, productService, userService, uploadService, cartService, orderService)
+	srv := server.New(
+		cfg,
+		db,
+		&log,
+		authService,
+		productService,
+		userService,
+		uploadService,
+		cartService,
+		orderService,
+	)
 
 	router := srv.SetupRoutes()
 
