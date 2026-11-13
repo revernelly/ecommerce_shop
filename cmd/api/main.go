@@ -14,6 +14,7 @@ import (
 	_ "github.com/revernelly/go_shop/docs"
 	"github.com/revernelly/go_shop/internal/config"
 	"github.com/revernelly/go_shop/internal/database"
+	"github.com/revernelly/go_shop/internal/events"
 	"github.com/revernelly/go_shop/internal/interfaces"
 	"github.com/revernelly/go_shop/internal/logger"
 	"github.com/revernelly/go_shop/internal/providers"
@@ -60,9 +61,16 @@ func main() {
 		log.Fatal().Err(err).Msg("failed to get database connection")
 	}
 	defer mainDB.Close()
+
+	ctx := context.Background()
+	eventPublisher, err := events.NewEventPublisher(ctx, &cfg.AWS)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to create event publisher")
+		return
+	}
 	gin.SetMode(cfg.Server.GinMode)
 
-	authService := services.NewAuthService(db, cfg)
+	authService := services.NewAuthService(db, cfg, eventPublisher)
 	productService := services.NewProductService(db)
 	userService := services.NewUserService(db)
 	cartService := services.NewCartService(db)
