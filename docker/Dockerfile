@@ -27,8 +27,8 @@ RUN apk --no-cache add ca-certificates
 
 WORKDIR /root/
 
-# Copy all binaries from builder
-COPY --from=builder /app/bin/* ./
+# Copy all binaries from builder with executable permissions
+COPY --from=builder --chmod=755 /app/bin/ ./
 
 # Default command (can be overridden in docker-compose)
 CMD ["./api"]
