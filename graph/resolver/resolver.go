@@ -1,6 +1,10 @@
 package resolver
 
-import "strconv"
+import (
+	"strconv"
+
+	"github.com/revernelly/go_shop/internal/services"
+)
 
 // This file will not be regenerated automatically.
 //
@@ -14,11 +18,11 @@ type Resolver struct {
 	orderService   *services.OrderService
 }
 
-func NewResolver(authService services.AuthServiceInterface,
-	userService services.UserServiceInterface,
-	productService services.ProductServiceInterface,
-	cartService services.CartServiceInterface,
-	orderService services.OrderServiceInterface) *Resolver {
+func NewResolver(authService *services.AuthService,
+	userService *services.UserService,
+	productService *services.ProductService,
+	cartService *services.CartService,
+	orderService *services.OrderService) *Resolver {
 
 	return &Resolver{
 		authService:    authService,
