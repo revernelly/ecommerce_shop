@@ -66,6 +66,17 @@ func (s *Server) SetupRoutes() *gin.Engine {
 
 	router.Static("/uploads", "./uploads")
 
+	router.GET("/playground", s.playgroundHandler())
+
+	graphqlPublic := router.Group("/graphql")
+	graphqlPublic.Use(s.graphqlMiddleware())
+	graphqlPublic.POST("/", s.graphqlHandler())
+
+	graphqlProtected := router.Group("/graphql")
+	graphqlProtected.Use(s.authMiddleware())
+	graphqlProtected.Use(s.graphqlMiddleware())
+	graphqlProtected.POST("/", s.graphqlHandler())
+
 	api := router.Group("/api/v1")
 	{
 		auth := api.Group("/auth")
