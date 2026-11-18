@@ -3,7 +3,7 @@ module github.com/revernelly/go_shop
 go 1.26.0
 
 require (
-	github.com/99designs/gqlgen v0.17.78
+	github.com/99designs/gqlgen v0.17.98
 	github.com/aws/aws-sdk-go-v2 v1.47.8
 	github.com/aws/aws-sdk-go-v2/config v1.33.16
 	github.com/aws/aws-sdk-go-v2/credentials v1.20.16
@@ -28,10 +28,13 @@ require (
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/agnivade/levenshtein v1.2.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sqs v1.42.27 // indirect
+	github.com/coder/websocket v1.8.15 // indirect
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
 	github.com/go-openapi/jsonreference v0.19.6 // indirect
 	github.com/go-openapi/spec v0.20.4 // indirect
 	github.com/go-openapi/swag v0.19.15 // indirect
+	github.com/go-viper/mapstructure/v2 v2.5.0 // indirect
+	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/lithammer/shortuuid/v3 v3.0.7 // indirect
 	github.com/mailru/easyjson v0.7.6 // indirect
