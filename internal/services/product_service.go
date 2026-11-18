@@ -203,6 +203,7 @@ func (s *ProductService) convertToProductResponse(product *models.Product) dto.P
 			URL:       product.Images[i].URL,
 			AltText:   product.Images[i].AltText,
 			IsPrimary: product.Images[i].IsPrimary,
+			CreatedAt: product.Images[i].CreatedAt,
 		}
 	}
 
@@ -220,7 +221,11 @@ func (s *ProductService) convertToProductResponse(product *models.Product) dto.P
 			Name:        product.Category.Name,
 			Description: product.Category.Description,
 			IsActive:    product.Category.IsActive,
+			CreatedAt:   product.Category.CreatedAt,
+			UpdatedAt:   product.Category.UpdatedAt,
 		},
-		Images: images,
+		Images:    images,
+		CreatedAt: product.CreatedAt,
+		UpdatedAt: product.UpdatedAt,
 	}
 }
