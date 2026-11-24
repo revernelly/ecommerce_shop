@@ -10,23 +10,29 @@ import (
 	"github.com/revernelly/go_shop/internal/events"
 	"github.com/revernelly/go_shop/internal/models"
 	"github.com/revernelly/go_shop/internal/notifications"
+	"github.com/revernelly/go_shop/internal/repositories"
 	"github.com/revernelly/go_shop/internal/utils"
-	"gorm.io/gorm"
 )
 
 var _ AuthServiceInterface = (*AuthService)(nil)
 
 type AuthService struct {
-	db             *gorm.DB
+	userRepo       repositories.UserRepositoryInterface
+	cartRepo       repositories.CartRepositoryInterface
 	config         *config.Config
 	eventPublisher events.Publisher
 }
 
-func NewAuthService(db *gorm.DB, config *config.Config, eventPublisher events.Publisher) *AuthService {
+func NewAuthService(config *config.Config,
+	eventPublisher events.Publisher,
+	userRepo repositories.UserRepositoryInterface,
+	cartRepo repositories.CartRepositoryInterface,
+) *AuthService {
 	return &AuthService{
-		db:             db,
 		config:         config,
 		eventPublisher: eventPublisher,
+		userRepo:       userRepo,
+		cartRepo:       cartRepo,
 	}
 }
 
