@@ -18,6 +18,7 @@ import (
 	"github.com/revernelly/go_shop/internal/interfaces"
 	"github.com/revernelly/go_shop/internal/logger"
 	"github.com/revernelly/go_shop/internal/providers"
+	"github.com/revernelly/go_shop/internal/repositories"
 	"github.com/revernelly/go_shop/internal/server"
 	"github.com/revernelly/go_shop/internal/services"
 )
@@ -70,7 +71,10 @@ func main() {
 	}
 	gin.SetMode(cfg.Server.GinMode)
 
-	authService := services.NewAuthService(db, cfg, eventPublisher)
+	userRepo := repositories.NewUserRepository(db)
+	cartRepo := repositories.NewCartRepository(db)
+
+	authService := services.NewAuthService(cfg, eventPublisher, userRepo, cartRepo)
 	productService := services.NewProductService(db)
 	userService := services.NewUserService(db)
 	cartService := services.NewCartService(db)
